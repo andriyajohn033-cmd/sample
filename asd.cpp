@@ -1,5 +1,5 @@
 #inlcude <afx.h>
 int main()
 {
-  return 15;
+  return 25;
 }
