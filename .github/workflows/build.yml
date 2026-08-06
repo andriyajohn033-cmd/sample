@@ -1,9 +1,8 @@
-name: Build
+name: Build and Deploy
 
 on:
   push:
     branches:
-    
       - qa
       - main
 
@@ -12,12 +11,51 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - run: npm install
+      - name: Install Dependencies
+        run: npm install
 
-      - run: npm run build
+      - name: Build Project
+        run: npm run build
+
+  deploy-qa:
+    if: github.ref == 'refs/heads/qa'
+    needs: build
+    runs-on: ubuntu-latest
+
+    environment:
+      name: QA
+
+    steps:
+      - name: Deploy to QA
+        run: |
+          echo "================================"
+          echo "Deploying Build to QA"
+          echo "Environment : QA"
+          echo "Build Successful"
+          echo "Deployment Successful"
+          echo "================================"
+
+  deploy-production:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+
+    environment:
+      name: Production
+
+    steps:
+      - name: Deploy to Production
+        run: |
+          echo "================================"
+          echo "Deploying Build to Production"
+          echo "Environment : Production"
+          echo "Deployment Successful"
+          echo "================================"
