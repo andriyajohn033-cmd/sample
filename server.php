@@ -1,6 +1,6 @@
 <?php
-$name = "John";
-$age = 28;
+$name = "Sree";
+$age = 33;
 
 echo "Name: " . $name . "<br>";
 echo "Age: " . $age;
